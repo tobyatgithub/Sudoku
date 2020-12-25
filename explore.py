@@ -10,8 +10,9 @@ board = [
     [0,4,9,2,0,6,0,0,7]
 ]
 
+from typing import List
 
-def print_board(board):
+def print_board(board: List[list]):
     for i in range(len(board)):
         if i % 3 == 0:
             print("- " * 12)
@@ -24,7 +25,7 @@ def print_board(board):
                 print("|", end=" ")
         print("")
 
-def find_empty_spot(board):
+def find_empty_spot(board: List[list]):
     for i in range(len(board)):
         for j in range(len(board[0])):
             if board[i][j] == 0:
