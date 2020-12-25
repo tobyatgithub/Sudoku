@@ -10,9 +10,9 @@ board = [
     [0,4,9,2,0,6,0,0,7]
 ]
 
-from typing import List
+from typing import List, Set, Tuple
 
-def print_board(board: List[list]):
+def print_board(board: List[list]) -> None:
     for i in range(len(board)):
         if i % 3 == 0:
             print("- " * 12)
@@ -25,10 +25,34 @@ def print_board(board: List[list]):
                 print("|", end=" ")
         print("")
 
-def find_empty_spot(board: List[list]):
+def find_empty_spot(board: List[list]) -> Tuple[int, int]:
     for i in range(len(board)):
         for j in range(len(board[0])):
             if board[i][j] == 0:
                 return (i, j)
 
+def check_is_valid(board: List[list], num: int, position: Tuple[int, int]) -> bool:
+    # check row
+    x, y = position
+    for j in range(len(board[0])):
+        if board[x][j] == num and j != y:
+            return False
+    # check columns
+    for i in range(len(board)):
+        if board[i][y] == num and i != x:
+            return False
+    # check box
+    box_x = x // 3
+    box_y = y // 3
+    for i in range(box_x * 3, box_x * 3 + 3):
+        for j in range(box_y * 3, box_y *3 + 3):
+            if board[i][j] == num and (i,j) != position:
+                return False
+    return True
+
 print_board(board)
+
+# hand test:
+assert check_is_valid(board, 5, (1,1)) == False
+assert check_is_valid(board, 1, (1,1)) == True
+assert check_is_valid(board, 1, (8,8)) == False
